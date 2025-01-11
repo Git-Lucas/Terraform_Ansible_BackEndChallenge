@@ -1,0 +1,9 @@
+- name: Deploy .NET application to EC2
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install .NET runtime
+      ansible.builtin.apt:
+        name: dotnet-runtime-8.0
+        state: present
