@@ -3,7 +3,8 @@
   become: true
 
   tasks:
-    - name: Install .NET runtime
-      ansible.builtin.apt:
+    - name: Install .NET Runtime 8
+      apt:
         name: dotnet-runtime-8.0
         state: present
+        update_cache: yes
