@@ -9,9 +9,9 @@ terraform {
   required_version = ">= 1.2.0"
 
   backend "s3" {
-    bucket         = "elasticbeanstalk-us-east-2-890742564021"
+    bucket         = "s3-bucket-125675"
     key            = "terraform/backendchallenge/terraform.tfstate"
-    region         = "us-east-2"
+    region         = "us-east-1"
     dynamodb_table = "terraform-locks"
     encrypt        = true
   }
