@@ -19,7 +19,7 @@
   
     - name: Copy application files
       ansible.builtin.copy:
-        src: ./publish/
+        src: Terraform_Ansible_BackEndChallenge/files/publish/
         dest: /var/www/dotnet_app/
         owner: ubuntu
         group: ubuntu
