@@ -38,6 +38,6 @@ override.tf.json
 terraform.rc
 
 # Ignore key pair
-*.pem
+*.pem*
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform
