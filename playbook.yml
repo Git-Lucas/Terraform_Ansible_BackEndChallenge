@@ -18,12 +18,10 @@
         mode: 0755
   
     - name: Copy application files
-      ansible.builtin.copy:
+      ansible.builtin.synchronize:
         src: /home/runner/work/Back-End_Challenge_20210221/Back-End_Challenge_20210221/publish/
         dest: /var/www/dotnet_app/
-        owner: ubuntu
-        group: ubuntu
-        mode: 0755
+        recursive: yes
 
     - name: Set environment variables
       ansible.builtin.copy:
@@ -32,6 +30,8 @@
         mode: 0644
 
     - name: Start .NET application
-      ansible.builtin.command: nohup dotnet /var/www/dotnet_app/Back-End_Challenge_20210221.dll >nohup.out 2>nohup.err &
+      ansible.builtin.shell: |
+        source /etc/environment
+        nohup dotnet /var/www/dotnet_app/Back-End_Challenge_20210221.dll >nohup.out 2>nohup.err &
       args:
-        chdir: /var/www/dotnet_app/    
+        chdir: /var/www/dotnet_app/
