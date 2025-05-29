@@ -19,7 +19,7 @@
   
     - name: Copy application files
       ansible.builtin.synchronize:
-        src: ./publish/
+        src: /home/runner/work/Back-End_Challenge_20210221/Back-End_Challenge_20210221/publish/
         dest: /var/www/dotnet_app/
         recursive: yes
 
