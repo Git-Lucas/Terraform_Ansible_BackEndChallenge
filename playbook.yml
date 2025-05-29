@@ -19,7 +19,7 @@
   
     - name: Copy application files
       ansible.builtin.synchronize:
-        src: /home/runner/work/Back-End_Challenge_20210221/Back-End_Challenge_20210221/publish/
+        src: ./publish/
         dest: /var/www/dotnet_app/
         recursive: yes
 
@@ -28,6 +28,15 @@
         content: ASPNETCORE_ENVIRONMENT=Development
         dest: /etc/environment
         mode: 0644
+
+    - name: Stop any running .NET application
+      become: yes
+      ansible.builtin.shell: pkill -f 'Back-End_Challenge_20210221.dll' || true
+      ignore_errors: true
+
+    - name: Wait to ensure the process was stopped
+      ansible.builtin.pause:
+        seconds: 5
 
     - name: Start .NET application
       ansible.builtin.shell: |
