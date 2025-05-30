@@ -32,7 +32,8 @@
     - name: Stop any running .NET application
       become: yes
       ansible.builtin.shell: pkill -f 'Back-End_Challenge_20210221.dll' || true
-      ignore_errors: true
+      register: pkill_result
+      failed_when: false
 
     - name: Wait to ensure the process was stopped
       ansible.builtin.pause:

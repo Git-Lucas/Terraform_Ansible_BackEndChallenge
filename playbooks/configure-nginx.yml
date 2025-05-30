@@ -1,0 +1,47 @@
+- name: Configure NGINX reverse proxy
+  hosts: all
+  become: yes
+  vars:
+    dotnet_port: 5000
+
+  tasks:
+    - name: Install NGINX
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Ensure NGINX is started and enabled
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Configure NGINX reverse proxy
+      ansible.builtin.copy:
+        dest: /etc/nginx/sites-available/default
+        content: |
+          server {
+              listen 80;
+
+              server_name _;
+
+              location / {
+                  proxy_pass         http://localhost:{{ dotnet_port }};
+                  proxy_http_version 1.1;
+                  proxy_set_header   Upgrade $http_upgrade;
+                  proxy_set_header   Connection keep-alive;
+                  proxy_set_header   Host $host;
+                  proxy_cache_bypass $http_upgrade;
+              }
+          }
+
+    - name: Test NGINX configuration
+      ansible.builtin.command: nginx -t
+      register: nginx_test
+      failed_when: nginx_test.rc != 0
+
+    - name: Reload NGINX
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
