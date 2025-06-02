@@ -117,8 +117,8 @@ output "instance_public_ip" {
   value = aws_instance.backendchallenge_app.public_ip
 }
 
-output "rds_endpoint" {
-  value = aws_db_instance.sqlserver.endpoint
+output "rds_address" {
+  value = aws_db_instance.sqlserver.address
 }
 output "rds_username" {
   value = aws_db_instance.sqlserver.username
